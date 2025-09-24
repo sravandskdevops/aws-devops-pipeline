@@ -4,29 +4,32 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo '✅ Build Stage: Application build successful!'
+                // Build the Java project with Maven, skipping tests
+                sh 'mvn clean package -DskipTests'
             }
         }
 
         stage('Test') {
             steps {
-                echo '✅ Test Stage: All tests passed!'
+                // Run the tests
+                sh 'mvn test'
             }
         }
 
         stage('Deploy') {
             steps {
-                echo '✅ Deploy Stage: Application deployed successfully!'
+                // For now just echo, or you can copy .jar/.war to a server
+                echo 'Deploying application...'
             }
         }
     }
 
     post {
         success {
-            echo '🎉 Pipeline completed successfully!'
+            echo '🎉 Maven pipeline completed successfully!'
         }
         failure {
-            echo '❌ Pipeline failed. Check logs for details.'
+            echo '❌ Maven pipeline failed. Check logs for details.'
         }
     }
 }
